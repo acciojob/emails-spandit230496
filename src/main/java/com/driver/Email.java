@@ -1,11 +1,13 @@
 package com.driver;
 
+import org.apache.commons.collections.map.HashedMap;
+
 public class Email {
 
     private String emailId;
     private String password;
 
-    public Email(String emailId){
+    public Email(String emailId) {
         this.emailId = emailId;
         this.password = "Accio@123";
     }
@@ -18,12 +20,22 @@ public class Email {
         return password;
     }
 
-    public void changePassword(String oldPassword, String newPassword){
-        //Change password only if the oldPassword is equal to current password and the new password meets all of the following:
-        // 1. It contains at least 8 characters
-        // 2. It contains at least one uppercase letter
-        // 3. It contains at least one lowercase letter
-        // 4. It contains at least one digit
-        // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
+    public void changePassword(String oldPassword, String newPassword) {
+        if (password.equals(oldPassword)) {
+            if (passWordValidation(newPassword)) {
+                System.out.println("Password changed successfully");
+                this.password = newPassword;
+            } else {
+                System.out.println("The new password is not valid !!!");
+            }
+        } else {
+            System.out.println("Your Current Password is not in our database");
+        }
+    }
+
+    private boolean passWordValidation(String password) {
+        return password.length() >= 8 && password.matches(".*[A-Z].*")
+                && password.matches(".*[a-z].*") && password.matches(".*\\d.*")
+                && password.matches(".*[^a-zA-Z0-9].*");
     }
 }
